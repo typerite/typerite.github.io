@@ -14,12 +14,13 @@ button {
 .show {
 	transform: scale(1) !important;
 	pointer-events: all;
-	transform-origin: top left;
+	/* transform-origin: initial; */
 }
 
 .left__toolbar {
-	padding-left: 1vw;
+	/* padding-left: 1vw; */
 	transition-duration: 0.4s;
+	transform-origin: top left;
 }
 
 .left__toolbar:not(.show) {
@@ -27,8 +28,8 @@ button {
 	pointer-events: none;
 }
 
-button:not(#drop):hover {
-	font-size: 20px;
+button:hover {
+	transform: scale(1.2);
 }
 
 *::selection {
@@ -51,6 +52,7 @@ button:not(#drop):hover {
 }
 
 input[type="text"] {
+	/* display: inline; */
 	width: 100%;
 	flex: auto;
 	-webkit-appearance: none;
