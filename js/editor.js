@@ -112,6 +112,7 @@ function readAll() {
 }
 
 window.onload = () => {
+    add("0000", "Example Note!", "<b>This</b> is an <i>example</i> note!")
     readAll()
     setTimeout(()=>{
         while(true){
