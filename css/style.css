@@ -11,8 +11,24 @@ button {
 	padding: 6px;
 }
 
-button:hover {
-	padding: 10px;
+.show {
+	transform: scale(1) !important;
+	pointer-events: all;
+	transform-origin: top left;
+}
+
+.left__toolbar {
+	padding-left: 1vw;
+	transition-duration: 0.4s;
+}
+
+.left__toolbar:not(.show) {
+	transform: scale(0) !important;
+	pointer-events: none;
+}
+
+button:not(#drop):hover {
+	font-size: 20px;
 }
 
 *::selection {
@@ -23,7 +39,7 @@ button:hover {
 	flex: auto;
 	-webkit-appearance: none;
 	border: none;
-	caret-color:rgb(37, 37, 37);
+	caret-color: rgb(37, 37, 37);
 	background: none;
 	padding: 40px;
 	padding-top: 0;
@@ -105,7 +121,8 @@ input[type="text"]:focus {
 	font-weight: bold;
 }
 
-.left__list__doc__title, .left__list__doc__text {
+.left__list__doc__title,
+.left__list__doc__text {
 	color: inherit;
 	background-color: inherit;
 }
@@ -113,4 +130,9 @@ input[type="text"]:focus {
 iframe {
 	width: inherit;
 	height: inherit;
+}
+
+#drop {
+	margin: 10px 0px 10px 0px;
+	width: 100%;
 }
