@@ -51,9 +51,14 @@ button:hover {
 	height: 100%;
 }
 
+#id {
+	font-size: 26px;
+	font-weight: bolder;
+}
+
 input[type="text"] {
 	/* display: inline; */
-	width: 100%;
+	width: 80%;
 	flex: auto;
 	-webkit-appearance: none;
 	border: none;

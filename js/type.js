@@ -75,20 +75,25 @@ function readAll() {
     };
 }
 
+function loadRite(id) {
+    document.querySelector("#frame").contentWindow.postMessage(id)
+}
+
 window.onload = () => {
     readAll()
     setTimeout(() => {
         // alert(objs[0]["title"])
         objs.forEach((i, j) => {
             c = document.createElement("div");
+            c.onclick = () => {loadRite(i["id"])};
             c.className = "left__list__doc";
             c.innerHTML = `<div class="left__list__doc__title">
-            `+i["title"]+`
+            ` + i["title"] + `
         </div>
         <div class="left__list__doc__text">
-        `+i["text"].match(/.{1,25}(\s|$)/g)[0].replace(/^\s+|\s+$/g, '')+`...
+        ` + i["text"].match(/.{1,25}(\s|$)/g)[0].replace(/^\s+|\s+$/g, '') + `...
         </div>`;
+            prevs.appendChild(c);
         });
-        prevs.appendChild(c);
     }, 100);
 }

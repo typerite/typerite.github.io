@@ -1,8 +1,10 @@
 let textbox = document.querySelector("#text");
 let title = document.querySelector("#title");
 let prevs = document.querySelector("#docprevs");
+let idElem = document.querySelector("#id");
+let uid = (Math.floor(Math.random() * 9999) + 1).toPrecision(4).replace(".", "");
 
-let fontSize = 16
+let fontSize = 16;
 
 var isCtrl = false;
 document.onkeyup = function (e) {
@@ -107,4 +109,34 @@ function readAll() {
             // alert("No more entries!");
         }
     };
+}
+
+window.onload = () => {
+    readAll()
+    setTimeout(()=>{
+        while(true){
+            if(objs.find(x=>{return x["id"]!=uid})==undefined){
+                uid = (Math.floor(Math.random() * 9999) + 1).toPrecision(4).replace(".", "");
+            }
+            else {
+                break;
+            }
+        }
+
+        idElem.innerText = "#"+uid;
+    },100);
+}
+
+window.addEventListener("message", (event) => {
+    // console.log(event.data)
+    rite = objs.find(x=>{return x.id == event.data});
+    textbox.innerHTML = rite["text"];
+    title.value = rite["title"];
+    idElem.innerText = "#"+rite["id"];
+});
+
+textbox.onkeydown = () => {
+    if(textbox.textContent != "Enter some text..."){
+        add(uid, title.value, textbox.innerHTML);
+    }
 }
