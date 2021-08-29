@@ -94,6 +94,14 @@ function add(id_, title_, text_) {
     }
 }
 
+function remove(id_) {
+    var request = db.transaction(["typerite"], "readwrite").objectStore("typerite").delete(id_);
+
+    request.onsuccess = function (event) {
+        
+    };
+}
+
 let objs = []
 
 function readAll() {
@@ -210,6 +218,11 @@ window.addEventListener("message", (event) => {
         SEC = event.data.split("pcode")[1];
         add("0000", "Example Note!", "<b>This</b> is an <i>example</i> note! Press Ctrl+I to italicized highlited text, Ctrl+B to make highlighted text bold and Ctrl+U to underline highlighted text");
         setUID();
+        setInterval(() => {
+            saveRite();
+        }, 10000);
+    } else if (event.data.startsWith("rmrite")) {
+        remove(event.data.split("rmrite")[1]);
     } else {
         // console.log(event.data)
         rite = objs.find(x => {
@@ -221,10 +234,27 @@ window.addEventListener("message", (event) => {
     }
 });
 
-textbox.onkeydown = () => {
-    if (textbox.textContent != "Enter some text...") {
+function saveRite() {
+    // alert(1)
+    if (textbox.textContent != "Enter some text..." && title.value != "") {
         add(uid, title.value, textbox.innerHTML);
     }
+}
+
+textbox.onblur = () => {
+    saveRite();
+}
+
+textbox.onclick = () => {
+    saveRite();
+}
+
+title.onclick = () => {
+    saveRite();
+}
+
+title.onblur = () => {
+    saveRite();
 }
 
 function encrypt(text, secret) {

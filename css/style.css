@@ -13,6 +13,7 @@ button {
 	border-radius: 6px;
 	transition-duration: 0.4s;
 	padding: 6px;
+	margin: 3px;
 }
 
 .show {
@@ -128,7 +129,7 @@ input[type="text"]:focus {
 	color: white;
 	/* padding: 10px; */
 	transform-origin: left;
-	transform: scale(1.2);
+	/* transform: scale(1.2); */
 }
 
 .left__list__doc__title {

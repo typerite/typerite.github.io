@@ -105,6 +105,11 @@ function loadRite(id) {
     document.querySelector("#frame").contentWindow.postMessage(id)
 }
 
+function rmRite(id) {
+    // alert(id)
+    document.querySelector("#frame").contentWindow.postMessage("rmrite"+id)
+}
+
 function getCookie(cname) {
     let name = cname + "=";
     let decodedCookie = decodeURIComponent(document.cookie);
@@ -156,6 +161,12 @@ window.onload = () => {
             c.onclick = () => {
                 loadRite(i["id"])
             };
+            d = document.createElement("button");
+            d.innerHTML = '<i class="fas fa-dumpster"></i>';
+            d.onclick = () => {
+                rmRite(i["id"]);
+            }
+            d.style = "position: relative; left: 90%; transform: translateY(-40px);";
             c.className = "left__list__doc";
             c.innerHTML = `<div class="left__list__doc__title">
             ` + decrypt(i["title"], SEC).match(/.{1,25}(\s|$)/g)[0].replace(/^\s+|\s+$/g, '') + `...
@@ -163,6 +174,7 @@ window.onload = () => {
         <div class="left__list__doc__text">
         ` + decrypt(i["text"], SEC).match(/.{1,25}(\s|$)/g)[0].replace(/^\s+|\s+$/g, '') + `...
         </div>`;
+            c.appendChild(d);
             prevs.appendChild(c);
         });
     }, 100);
