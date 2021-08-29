@@ -5,7 +5,7 @@
 	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 	<meta name="description" content="A simplistic and modern text-editor">
 	<meta name="twitter:image" content="./favicon.ico">
-	<link rel="stylesheet" href="/css/style.css">
+	<link id="mode" rel="stylesheet" href="/css/style.css">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
@@ -37,6 +37,7 @@
 				
 			</div>
 		</div> 
+		<button onclick="changeTheme()" style="position: absolute; bottom: 2%; transform: scale(2); margin: 30px;"><i class="far fa-lightbulb"></i></button>
 	</div>
 	<div class="right">
 		<iframe id="frame" src="./editor.html" frameborder="0"></iframe>

@@ -21,6 +21,32 @@ if (!window.indexedDB) {
     window.alert("Your browser doesn't support a stable version of IndexedDB.")
 }
 
+
+
+function changeTheme(c) {
+    if (c) {
+        if (getCookie("theme") == "dark") {
+            document.querySelector("#mode").href = "/css/dark.css";
+            document.querySelector("#frame").contentWindow.document.querySelector("#mode").href = "/css/dark.css";
+            document.cookie = "theme=dark";
+        } else {
+            document.querySelector("#mode").href = "/css/style.css";
+            document.querySelector("#frame").contentWindow.document.querySelector("#mode").href = "/css/style.css";
+            document.cookie = "theme=light";
+        }
+    } else {
+        if (document.querySelector("#mode").href == "http://localhost:8000/css/style.css") {
+            document.querySelector("#mode").href = "/css/dark.css";
+            document.querySelector("#frame").contentWindow.document.querySelector("#mode").href = "/css/dark.css";
+            document.cookie = "theme=dark";
+        } else {
+            document.querySelector("#mode").href = "/css/style.css";
+            document.querySelector("#frame").contentWindow.document.querySelector("#mode").href = "/css/style.css";
+            document.cookie = "theme=light";
+        }
+    }
+}
+
 let db;
 let request = window.indexedDB.open("typerite", 4);
 
@@ -117,6 +143,8 @@ function getPass() {
     document.querySelector("#frame").contentWindow.postMessage("pcode" + SEC);
     document.cookie = "passwd=" + SEC;
 }
+
+changeTheme(true)
 
 window.onload = () => {
     readAll()

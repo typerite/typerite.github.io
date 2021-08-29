@@ -1,15 +1,15 @@
 * {
-	background-color: rgb(240, 240, 240);
-	color: rgb(37, 37, 37);
+	background-color: rgb(61, 51, 61);
+	color: rgb(230, 230, 230);
 	font-family: 'Montserrat', sans-serif;
 }
 
 .fas {
-	color: rgb(102, 0, 105);
+	color: rgb(254, 228, 255);
 }
 
 button {
-	border: 2px solid #000000;
+	border: 2px solid rgb(230, 230, 230);
 	border-radius: 6px;
 	transition-duration: 0.4s;
 	padding: 6px;
@@ -38,14 +38,14 @@ button:hover {
 }
 
 *::selection {
-	background-color: rgba(134, 134, 134, 0.459);
+	background-color: rgba(212, 177, 219, 0.76);
 }
 
 #text {
 	flex: auto;
 	-webkit-appearance: none;
 	border: none;
-	caret-color: rgb(37, 37, 37);
+	caret-color: rgb(255, 255, 255);
 	background: none;
 	padding: 40px;
 	padding-top: 0;
@@ -86,7 +86,7 @@ input[type="text"]:focus {
 	margin-left: 26%;
 	padding: 1px 16px;
 	height: 98%;
-	border: rgb(182, 182, 182) solid;
+	border: rgb(131, 138, 168) solid;
 	display: flex;
 	flex-direction: column;
 	border-radius: 6px;
@@ -97,15 +97,15 @@ input[type="text"]:focus {
 }
 
 .left {
-	overflow: hidden;
+	overflow: hidden; 
 	user-select: none;
-	border: rgb(182, 182, 182) solid;
+    border: rgb(131, 138, 168) solid;
 	border-radius: 6px;
 	list-style-type: none;
 	margin: 0;
 	padding: 0;
 	width: 25%;
-	background-color: #f1f1f1;
+	background-color: rgb(61, 51, 61);
 	height: 100%;
 	/* Full height */
 	position: fixed;
@@ -118,14 +118,15 @@ input[type="text"]:focus {
 	overflow: hidden;
 	transition-duration: 0.4s;
 	display: block;
-	color: #000;
+	color: rgb(230, 230, 230);
 	padding: 8px 16px;
 	text-decoration: none;
 }
 
 .left__list__doc:hover {
-	background-color: #555;
-	color: white;
+    color: rgb(34, 0, 34);
+    background-color: rgb(230, 230, 230);
+
 	/* padding: 10px; */
 	transform-origin: left;
 	transform: scale(1.2);
