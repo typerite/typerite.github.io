@@ -3,6 +3,7 @@ let title = document.querySelector("#title");
 let prevs = document.querySelector("#docprevs");
 let idElem = document.querySelector("#id");
 let uid = (Math.floor(Math.random() * 9999) + 1).toPrecision(4).replace(".", "");
+let SEC = "";
 
 let fontSize = 16;
 
@@ -58,7 +59,7 @@ if (!window.indexedDB) {
 }
 
 let db;
-let request = window.indexedDB.open("typerite", 3);
+let request = window.indexedDB.open("typerite", 4);
 
 request.onerror = function (event) {
     console.log("error: ");
@@ -80,8 +81,8 @@ request.onupgradeneeded = function (event) {
 function add(id_, title_, text_) {
     var request = db.transaction(["typerite"], "readwrite").objectStore("typerite").put({
         id: id_,
-        title: title_,
-        text: text_
+        title: encrypt(title_, SEC),
+        text: encrypt(text_, SEC)
     });
 
     request.onsuccess = function (event) {
@@ -111,33 +112,138 @@ function readAll() {
     };
 }
 
-window.onload = () => {
-    add("0000", "Example Note!", "<b>This</b> is an <i>example</i> note!")
+function lzw_encode(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    var out = [];
+    var currChar;
+    var phrase = data[0];
+    var code = 256;
+    for (var i = 1; i < data.length; i++) {
+        currChar = data[i];
+        if (dict[phrase + currChar] != null) {
+            phrase += currChar;
+        } else {
+            out.push(phrase.length > 1 ? dict[phrase] : phrase.charCodeAt(0));
+            dict[phrase + currChar] = code;
+            code++;
+            phrase = currChar;
+        }
+    }
+    out.push(phrase.length > 1 ? dict[phrase] : phrase.charCodeAt(0));
+    for (var i = 0; i < out.length; i++) {
+        out[i] = String.fromCharCode(out[i]);
+    }
+    return out.join("");
+}
+
+function lzw_decode(s) {
+    var dict = {};
+    var data = (s + "").split("");
+    var currChar = data[0];
+    var oldPhrase = currChar;
+    var out = [currChar];
+    var code = 256;
+    var phrase;
+    for (var i = 1; i < data.length; i++) {
+        var currCode = data[i].charCodeAt(0);
+        if (currCode < 256) {
+            phrase = data[i];
+        } else {
+            phrase = dict[currCode] ? dict[currCode] : (oldPhrase + currChar);
+        }
+        out.push(phrase);
+        currChar = phrase.charAt(0);
+        dict[code] = oldPhrase + currChar;
+        code++;
+        oldPhrase = phrase;
+    }
+    return out.join("");
+}
+
+function enc(plainText, SECRET) {
+    var b64 = CryptoJS.AES.encrypt(plainText, SECRET).toString();
+    var e64 = CryptoJS.enc.Base64.parse(b64);
+    var eHex = e64.toString(CryptoJS.enc.Hex);
+    return eHex;
+}
+
+function dec(cipherText, SECRET) {
+    var reb64 = CryptoJS.enc.Hex.parse(cipherText);
+    var bytes = reb64.toString(CryptoJS.enc.Base64);
+    var decrypt = CryptoJS.AES.decrypt(bytes, SECRET);
+    var plain = decrypt.toString(CryptoJS.enc.Utf8);
+    return plain;
+}
+
+function checksum(sd) {
+    return CryptoJS.MD5(sd).toString();
+}
+
+function setUID() {
     readAll()
-    setTimeout(()=>{
-        while(true){
-            if(objs.find(x=>{return x["id"]!=uid})==undefined){
+    setTimeout(() => {
+        while (true) {
+            if (objs.find(x => {
+                    return x["id"] != uid
+                }) == undefined) {
                 uid = (Math.floor(Math.random() * 9999) + 1).toPrecision(4).replace(".", "");
-            }
-            else {
+            } else {
                 break;
             }
         }
 
-        idElem.innerText = "#"+uid;
-    },100);
+        idElem.innerText = "#" + uid;
+    }, 100);
 }
 
+// window.onload = () => {
+// }
+
 window.addEventListener("message", (event) => {
-    // console.log(event.data)
-    rite = objs.find(x=>{return x.id == event.data});
-    textbox.innerHTML = rite["text"];
-    title.value = rite["title"];
-    idElem.innerText = "#"+rite["id"];
+    try {
+        event.data.startsWith("");
+    } catch (error) {
+        return;
+    }
+    if (event.data.startsWith("pcode")) {
+        SEC = event.data.split("pcode")[1];
+        add("0000", "Example Note!", "<b>This</b> is an <i>example</i> note! Press Ctrl+I to italicized highlited text, Ctrl+B to make highlighted text bold and Ctrl+U to underline highlighted text");
+        setUID();
+    } else {
+        // console.log(event.data)
+        rite = objs.find(x => {
+            return x.id == event.data
+        });
+        textbox.innerHTML = decrypt(rite["text"], SEC);
+        title.value = decrypt(rite["title"], SEC);
+        idElem.innerText = "#" + rite["id"];
+    }
 });
 
 textbox.onkeydown = () => {
-    if(textbox.textContent != "Enter some text..."){
+    if (textbox.textContent != "Enter some text...") {
         add(uid, title.value, textbox.innerHTML);
+    }
+}
+
+function encrypt(text, secret) {
+    return enc(lzw_encode(btoa(text)), secret) + "|" + checksum(lzw_encode(btoa(text)));
+}
+
+function decrypt(text, SECRET) {
+    split = text.split("|");
+    chsum = split[1];
+    encoded = split[0];
+    if (checksum(dec(encoded, SECRET)) != chsum) {
+        throw new TypeError("Incorrect Password Attempt")
+    } else if (checksum(dec(encoded, SECRET)) === chsum) {
+        try {
+            return atob(lzw_decode(dec(encoded, SECRET)))
+        } catch (error) {
+            throw new TypeError("Incorrect Password Attempt")
+        }
+    } else {
+        throw new TypeError("Incorrect Password Attempt")
     }
 }

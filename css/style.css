@@ -18,6 +18,7 @@ button {
 }
 
 .left__toolbar {
+	overflow: hidden;
 	/* padding-left: 1vw; */
 	transition-duration: 0.4s;
 	transform-origin: top left;
@@ -92,6 +93,7 @@ input[type="text"]:focus {
 }
 
 .left {
+	overflow: hidden;
 	user-select: none;
 	border: rgb(182, 182, 182) solid;
 	border-radius: 6px;
@@ -109,6 +111,7 @@ input[type="text"]:focus {
 }
 
 .left__list__doc {
+	overflow: hidden;
 	transition-duration: 0.4s;
 	display: block;
 	color: #000;
@@ -119,11 +122,13 @@ input[type="text"]:focus {
 .left__list__doc:hover {
 	background-color: #555;
 	color: white;
-	padding: 10px;
-
+	/* padding: 10px; */
+	transform-origin: left;
+	transform: scale(1.2);
 }
 
 .left__list__doc__title {
+	overflow: hidden;
 	font-size: 24px;
 	font-weight: bold;
 }
