@@ -35,7 +35,7 @@ function changeTheme(c) {
             document.cookie = "theme=light";
         }
     } else {
-        if (document.querySelector("#mode").href == "http://localhost:8000/css/style.css") {
+        if (document.querySelector("#mode").href.includes == "/css/style.css") {
             document.querySelector("#mode").href = "/css/dark.css";
             document.querySelector("#frame").contentWindow.document.querySelector("#mode").href = "/css/dark.css";
             document.cookie = "theme=dark";
