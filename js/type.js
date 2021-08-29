@@ -144,10 +144,10 @@ function getPass() {
     document.cookie = "passwd=" + SEC;
 }
 
-changeTheme(true)
 
 window.onload = () => {
-    readAll()
+    changeTheme(true);
+    readAll();
     setTimeout(() => {
         getPass();
         // alert(objs[0]["title"])
