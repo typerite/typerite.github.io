@@ -1,0 +1,156 @@
+* {
+	background-color: rgb(61, 51, 61);
+	color: rgb(230, 230, 230);
+	font-family: 'Montserrat', sans-serif;
+}
+
+.fas {
+	color: rgb(254, 228, 255);
+}
+
+button {
+	border: 2px solid rgb(230, 230, 230);
+	border-radius: 6px;
+	transition-duration: 0.4s;
+	margin: 3px;
+	padding: 6px;
+}
+
+.show {
+	transform: scale(1) !important;
+	pointer-events: all;
+	/* transform-origin: initial; */
+}
+
+.left__toolbar {
+	overflow: hidden;
+	/* padding-left: 1vw; */
+	transition-duration: 0.4s;
+	transform-origin: top left;
+}
+
+.left__toolbar:not(.show) {
+	transform: scale(0) !important;
+	pointer-events: none;
+}
+
+button:hover {
+	transform: scale(1.2);
+}
+
+*::selection {
+	background-color: rgba(212, 177, 219, 0.76);
+}
+
+#text {
+	flex: auto;
+	-webkit-appearance: none;
+	border: none;
+	caret-color: rgb(255, 255, 255);
+	background: none;
+	padding: 40px;
+	padding-top: 0;
+	font: inherit;
+	font-size: 16px;
+	line-height: 1.5;
+	width: 90%;
+	height: 100%;
+}
+
+#id {
+	font-size: 26px;
+	font-weight: bolder;
+}
+
+input[type="text"] {
+	/* display: inline; */
+	width: 80%;
+	flex: auto;
+	-webkit-appearance: none;
+	border: none;
+	background: none;
+	font: inherit;
+	padding: 40px;
+	font-weight: bold;
+	font-size: 28px;
+}
+
+#text:focus {
+	outline: none;
+}
+
+input[type="text"]:focus {
+	outline: none;
+}
+
+.right {
+	margin-left: 26%;
+	padding: 1px 16px;
+	height: 98%;
+	border: rgb(131, 138, 168) solid;
+	display: flex;
+	flex-direction: column;
+	border-radius: 6px;
+}
+
+.right__text {
+	height: 70%;
+}
+
+.left {
+	overflow: hidden; 
+	user-select: none;
+    border: rgb(131, 138, 168) solid;
+	border-radius: 6px;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	width: 25%;
+	background-color: rgb(61, 51, 61);
+	height: 100%;
+	/* Full height */
+	position: fixed;
+	/* Make it stick, even on scroll */
+	overflow: auto;
+	/* Enable scrolling if the sidenav has too much content */
+}
+
+.left__list__doc {
+	overflow: hidden;
+	transition-duration: 0.4s;
+	display: block;
+	color: rgb(230, 230, 230);
+	padding: 8px 16px;
+	text-decoration: none;
+}
+
+.left__list__doc:hover {
+    color: rgb(34, 0, 34);
+    background-color: rgb(230, 230, 230);
+
+	/* padding: 10px; */
+	/* transform-origin: left; */
+	/* transform: scale(1.2); */
+}
+
+.left__list__doc__title {
+	overflow: hidden;
+	font-size: 24px;
+	font-weight: bold;
+}
+
+.left__list__doc__title,
+.left__list__doc__text {
+	color: inherit;
+	background-color: inherit;
+}
+
+iframe {
+	width: inherit;
+	height: inherit;
+}
+
+#drop {
+	margin: 10px 0px 10px 0px;
+	width: 100%;
+}
